@@ -8,5 +8,7 @@
 breakfast = Category.create(name: 'breakfast')
 
 Recipe.create([
-    {name: "Eggs and Bacon", ingredients: "Eggs, Bacon, Salt, Pepper, Milk, Butter", instructions: "instrictions", category_id: 1}
+    {name: "Eggs and Bacon", ingredients: "Eggs, Bacon, Salt, Pepper, Milk, Butter", instructions: "instrictions", category_id: 1},
+    {name: "name", ingredients: "ingredients", instructions: "instrictions", category_id: 3},
+    {name: "name2", ingredients: "ingredients2", instructions: "instrictions2", category_id: 4}
 ])

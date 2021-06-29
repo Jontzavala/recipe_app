@@ -1,7 +1,4 @@
-/// resposible for fetch request to model
-
 class RecipeService{
-
     constructor(endpoint){
         this.endpoint = endpoint
     }
@@ -10,7 +7,10 @@ class RecipeService{
         fetch(`${this.endpoint}/recipes`)
         .then(resp => resp.json())
         .then(recipes => {
-            debugger
+            for (const recipe of recipes){
+                const r = new Recipe(recipe)
+                r.slapOnDom()
+            }
         })
     }
 }
