@@ -10,33 +10,38 @@ class Recipe {
         this.instructions = instructions
         this.category_id = category_id
 
-        this.element = document.createElement('li')
+        this.element = document.createElement('span')
         this.element.dataset.id = this.id
         this.element.id = `recipe-${this.id}`
-        this.element.addEventListener('click', this.handleClick)
+        
 
 
         Recipe.all.push(this)
     }
 
-    recipeHTML(){
-        this.element.innerHTML += `
-            <div>
-                <h3>${this.name}</h3>
-                <p>${this.ingredients} - ${this.instructions}</p>
-            </div>
+    static recipeHTML(recipe){
+
+        let category = recipe.category_id
+        const toPost = document.getElementById(`recipes-container-${category}`)
+        toPost.innerHTML = ""
+        toPost.innerHTML += `
+            <h4>${recipe.name}</h4>
+            <br>
+            <li>${recipe.ingredients}</li>
+            <br>
+            <ui>${recipe.instructions}</ui>
+            <br>
+            <br>
             <button id='delete-bttn'>Delete</button>
         `
-        return this.element
     }
 
-    slapOnDom(){
-        Recipe.recipesContainer.appendChild(this.recipeHTML())
-    }
 
-    static renderForm(){
-        Recipe.recipeForm.innerHTML += `
+    static renderRecipeForm(){
+        event.target.removeEventListener('click', this.handleClickRecipe)
+        return `
         <form id="new-recipe-form">
+            <h3>Create a New Recipe</h3>
             Name: <input type="text" id="name">
             Ingredients: <input type="text" id="ingredients">
             Instructions: <input type="text" id="instructions">
@@ -45,10 +50,34 @@ class Recipe {
         `
     }
 
-    handleClick = () => {
-        if (event.target.innerText === 'Delete'){
-            this.element.remove()
-            recipeService.deleteRecipe(this.id)
+    appendRecipetoDom(){
+        const category = event.target.parentNode
+        const post = document.getElementById(`recipes-container-${category.dataset.id}`)
+        post.innerHTML += `
+        <div data-id="recipe-container-${this.id}", id="recipe-container-${this.id}">
+        ${this.name}
+        <br>
+        ${this.ingredients}
+        <br>
+        ${this.instructions}
+        <br>
+        <br>
+        <button class='deleteBttn' id='delete-recipe-bttn-${this.id}'>Delete Recipe</button>
+        <br>
+        <br>
+        </div>
+        `
+        const deleteButtons = document.querySelectorAll('.deleteBttn')
+        for (const deleteButton of deleteButtons) {
+            deleteButton.addEventListener('click', this.handleClickDeleteRecipe)
+        }
+    }
+
+    handleClickDeleteRecipe = (event) => {
+        let categoryID = parseInt(event.target.parentNode.parentNode.parentNode.dataset.id)
+        if (event.target.innerText === 'Delete Recipe'){
+            event.target.parentNode.remove()
+            recipeService.deleteRecipe(categoryID, this.id)
         }
     }
 }
