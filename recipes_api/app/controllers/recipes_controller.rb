@@ -3,7 +3,7 @@ class RecipesController < ApplicationController
 
   # GET /recipes
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.all.select {|r| r.category_id == params[:category_id].to_i}
 
     render json: @recipes
   end

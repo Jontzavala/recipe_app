@@ -38,7 +38,7 @@ class Recipe {
 
 
     static renderRecipeForm(){
-        event.target.removeEventListener('click', this.handleClickRecipe)
+        event.target.addEventListener('click', this.handleClickRecipe)
         return `
         <form id="new-recipe-form">
             <h3>Create a New Recipe</h3>
@@ -51,27 +51,9 @@ class Recipe {
     }
 
     appendRecipetoDom(){
-        const category = event.target.parentNode
-        const post = document.getElementById(`recipes-container-${category.dataset.id}`)
-        post.innerHTML += `
-        <div data-id="recipe-container-${this.id}", id="recipe-container-${this.id}">
-        ${this.name}
-        <br>
-        ${this.ingredients}
-        <br>
-        ${this.instructions}
-        <br>
-        <br>
-        <button class='deleteBttn' id='delete-recipe-bttn-${this.id}'>Delete Recipe</button>
-        <br>
-        <br>
-        </div>
-        `
-        const deleteButtons = document.querySelectorAll('.deleteBttn')
-        for (const deleteButton of deleteButtons) {
-            deleteButton.addEventListener('click', this.handleClickDeleteRecipe)
-        }
+        Recipe.recipesContainer.append(this.recipeHTML())
     }
+
 
     handleClickDeleteRecipe = (event) => {
         let categoryID = parseInt(event.target.parentNode.parentNode.parentNode.dataset.id)

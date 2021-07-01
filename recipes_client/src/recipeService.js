@@ -9,17 +9,17 @@ class RecipeService{
         .then(recipes => {
             for (const recipe of recipes){
                 const r = new Recipe(recipe)
-                r.slapOnDom()
+                r.appendRecipetoDom()
             }
         })
     }
 
-    createRecipe(){
+    createRecipe(element){
         const recipe = {
             name: document.getElementById("name").value,
             ingredients: document.getElementById("ingredients").value,
             instructions: document.getElementById("instructions").value,
-            category_id: 2
+            category_id: parseInt(element.dataset.id)
         }
 
         const configObj = {
@@ -34,12 +34,12 @@ class RecipeService{
         .then(resp => resp.json())
         .then(recipe => {
             const r = new Recipe(recipe)
-            r.slapOnDom()
+            r.appendRecipetoDom
         })
     }
 
-    deleteRecipe(id){
-        fetch(`${this.endpoint}/recipes/${id}`, {
+    deleteRecipe(category, id){
+        fetch(`${this.endpoint}/categories/${category}/recipes/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
