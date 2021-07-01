@@ -16,7 +16,7 @@ class Recipe {
         
 
 
-        Recipe.all.push(this)
+        //Recipe.all.push(this)
     }
 
     static recipeHTML(recipe){
@@ -32,7 +32,6 @@ class Recipe {
             <ui>${recipe.instructions}</ui>
             <br>
             <br>
-            <button id='delete-bttn'>Delete</button>
         `
     }
 
@@ -43,15 +42,36 @@ class Recipe {
         <form id="new-recipe-form">
             <h3>Create a New Recipe</h3>
             Name: <input type="text" id="name">
+            <br>
             Ingredients: <input type="text" id="ingredients">
+            <br>
             Instructions: <input type="text" id="instructions">
+            <br>
             <input type="submit" id="create">
         <form>
         `
     }
 
     appendRecipetoDom(){
-        Recipe.recipesContainer.append(this.recipeHTML())
+        const recipesContainer = document.getElementById(`recipes-container-${this.category_id}`)
+        recipesContainer.innerHTML += `
+        <div data-id="${this.id}", id="recipe-${this.id}">
+            ${this.name}
+            <br>
+            ${this.ingredients}
+            <br>
+            ${this.instructions}
+            <br>
+            <br>
+            <button class='deleteBttn' id='delete-recipe-bttn-${this.id}'>Delete Recipe</button>
+            <br>
+            <br>
+        </div>
+        `
+        const deleteButtons = document.querySelectorAll('.deleteBttn')
+        for (const deleteButton of deleteButtons) {
+            deleteButton.addEventListener('click', this.handleClickDeleteRecipe)
+        }
     }
 
 
