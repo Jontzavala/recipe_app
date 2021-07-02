@@ -1,14 +1,9 @@
+const categoriesContainer = document.getElementById('categories-container')
+const categoryForm = document.getElementById("form-container")
+const recipeForm = document.getElementById("form-container")
 const base_url = "http://127.0.0.1:3000"
 const recipeService = new RecipeService(base_url)
 const categoryService = new CategoryService(base_url)
-Category.categoryForm.addEventListener("submit", handlesubmit)
-
 
 categoryService.getCategories()
 Category.renderForm()
-
-function handlesubmit(){
-    event.preventDefault()
-    categoryService.createCategory()
-    event.target.reset()
-}

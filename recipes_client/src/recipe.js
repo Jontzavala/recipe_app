@@ -1,7 +1,6 @@
 class Recipe {
     static all =[]
     static recipesContainer = document.getElementById("recipes-container")
-    static recipeForm = document.getElementById("form-container")
 
     constructor({id, name, ingredients, instructions, category_id}){
         this.id = id
@@ -16,7 +15,7 @@ class Recipe {
         
 
 
-        //Recipe.all.push(this)
+        Recipe.all.push(this)
     }
 
     static recipeHTML(recipe){

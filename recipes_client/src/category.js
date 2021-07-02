@@ -1,7 +1,5 @@
 class Category{
     static all =[]
-    static categoriesContainer = document.getElementById('categories-container')
-    static categoryForm = document.getElementById("form-container")
 
     constructor({id, name}){
         this.id = id
@@ -37,7 +35,7 @@ class Category{
         this.element.addEventListener('click', this.handleClickRecipe)
     }
 
-    static renderForm(){
+    static renderForm() {
         categoryForm.innerHTML += `
         <form id="new-category-form">
             <h3>Create a New Category!</h3>
@@ -68,10 +66,9 @@ class Category{
     }
 
     handleClickRecipe = () => {
-        const r = Recipe.renderRecipeForm()
-        const post = document.getElementById(event.target.parentNode.parentNode.id)
-        post.innerHTML += r
+        Recipe.renderRecipeForm()
         document.getElementById("new-category-form").addEventListener('submit', this.handleRecipeSubmit)
+    
     }
 
     handleRecipeSubmit(){

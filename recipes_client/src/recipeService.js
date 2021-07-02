@@ -9,7 +9,7 @@ class RecipeService{
         .then(recipes => {
             for (const recipe of recipes){
                 const r = new Recipe(recipe)
-                r.appendRecipetoDom()
+                r.slapOnDom()
             }
         })
     }
@@ -30,12 +30,25 @@ class RecipeService{
             body: JSON.stringify(recipe)
         }
 
-        fetch(`${this.endpoint}/recipes`, configObj)
+        fetch(`${recipeService.endpoint}/recipes`, configObj)
         .then(resp => resp.json())
         .then(recipe => {
             const r = new Recipe(recipe)
-            r.appendRecipetoDom
+            const toPost = document.getElementById(`recipes-container-${element.dataset.id}`)
+            toPost.innerHTML += `
+            ${r.name}
+            <br>
+            ${r.ingredients}
+            <br>
+            ${r.instructions}
+            `
         })
+    }
+
+    addRecipeToContainer() {
+        const container = document.getElementById("recipes-container")
+        this.createRecipe(elememnt)
+        debugger;
     }
 
     deleteRecipe(category, id){
