@@ -1,88 +1,44 @@
 class Category{
     static all =[]
+    static categoryContainer = document.getElementById('category-container')
+    static categoryForm = document.getElementById('category-form-container')
 
     constructor({id, name}){
         this.id = id
         this.name = name
 
         this.element = document.createElement('div')
-        this.element.dataset.id = this.id
         this.element.id = `category-${this.id}`
-        this.element.addEventListener('click', this.handleClickDelete)
-        this.element.addEventListener('click', this.handleShowAllRecipes)
 
 
         Category.all.push(this)
     }
 
-    categoryHTML(){
+    categoryElement(){
         this.element.innerHTML += `
-        <div>
-            <h3>${this.name}</h3>
-        </div>
-        <div id='recipes-container-${this.id}'>
-        </div>
-        <button id='delete-bttn'>Delete Category</button>
-        <button id='recipes-bttn'>Show All Recipes</button>
-        <br>
-        <br>
+        <p><strong>${this.name}</strong>
         `
         return this.element
     }
 
     slapOnDom(){
-        categoriesContainer.append(this.categoryHTML())
-        this.element.addEventListener('click', this.handleClickRecipe)
+        Category.categoryContainer.appendChild(this.categoryElement())
     }
 
-    static renderForm() {
-        categoryForm.innerHTML += `
+    optionToSelect(){
+        const selectCategory = document.getElementById('select-category')
+        selectCategory.options.add(new Option(this.name, this.id))
+    }
+
+    static renderForm(){
+        Category.categoryForm.innerHTML += `
+        <h3>Create a New Category!</h3>
         <form id="new-category-form">
-            <h3>Create a New Category!</h3>
             Name: <input type="text" id="name">
             <input type="submit" id="create">
         <form>
         `
-        categoryForm.addEventListener('submit', this.handleSubmit)
     }
-
-    static handleSubmit(){
-        event.preventDefault()
-        categoryService.createCategory()
-        event.target.reset()
-    }
-
-    handleClickDelete = () => {
-        if (event.target.innerText === 'Delete Category'){
-            this.element.remove()
-            categoryService.deleteCategory(this.id)
-        }
-    }
-
-    handleShowAllRecipes = () => {
-        if (event.target.innerText === 'Show All Recipes'){
-            categoryService.showAllRecipes(this.id)
-        }
-    }
-
-    handleClickRecipe = () => {
-        const r = Recipe.renderRecipeForm
-        const post = document.getElementById("recipes-container")
-        post.innerHTML += r   
-        document.getElementById("new-category-form").addEventListener('submit', this.handleRecipeSubmit)
-         
-    
-    }
-
-    handleRecipeSubmit(){
-        event.preventDefault()
-        recipeService.createRecipe()
-        event.target.parentElement.firstElementChild.firstElementChild.nextElementSibling.addEventListener('click', Recipe.renderRecipeForm)
-        event.target.remove()
-        
-    }
-
-
 
 
 }
