@@ -42,6 +42,7 @@ class CategoryService{
         fetch(`${this.endpoint}/categories/${category.dataset.id}/recipes`)
         .then(resp => resp.json())
         .then(recipes => {
+
             for (const recipe of recipes) {
                 const r = new Recipe(recipe)
                 r.appendRecipetoDom()

@@ -66,14 +66,17 @@ class Category{
     }
 
     handleClickRecipe = () => {
-        Recipe.renderRecipeForm()
+        const r = Recipe.renderRecipeForm
+        const post = document.getElementById("recipes-container")
+        post.innerHTML += r   
         document.getElementById("new-category-form").addEventListener('submit', this.handleRecipeSubmit)
+         
     
     }
 
     handleRecipeSubmit(){
         event.preventDefault()
-        recipeService.createRecipe(event.target.parentNode)
+        recipeService.createRecipe()
         event.target.parentElement.firstElementChild.firstElementChild.nextElementSibling.addEventListener('click', Recipe.renderRecipeForm)
         event.target.remove()
         

@@ -46,9 +46,8 @@ class RecipeService{
     }
 
     addRecipeToContainer() {
-        const container = document.getElementById("recipes-container")
-        this.createRecipe(elememnt)
-        debugger;
+        recipesContainer.append(this.showAllRecipes())
+        this.element.addEventListener('click', this.handleRecipeSubmit)
     }
 
     deleteRecipe(category, id){
