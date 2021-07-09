@@ -3,23 +3,24 @@ class RecipeService{
         this.endpoint = endpoint
     }
 
-    getRecipes(){
-        fetch(`${this.endpoint}/recipes`)
+    getRecipies(){
+        fetch(`${this.enpoint}/recipes`)
         .then(resp => resp.json())
         .then(recipes => {
             for (const recipe of recipes){
                 const r = new Recipe(recipe)
-                r.slapOnDom()
+                r.renderToDom()
             }
         })
     }
 
-    createRecipe(element){
+
+    createRecipe(){
         const recipe = {
             name: document.getElementById("name").value,
             ingredients: document.getElementById("ingredients").value,
             instructions: document.getElementById("instructions").value,
-            category_id: parseInt(element.dataset.id)
+            category_id: document.getElementById('select-category').value
         }
 
         const configObj = {
@@ -34,24 +35,12 @@ class RecipeService{
         .then(resp => resp.json())
         .then(recipe => {
             const r = new Recipe(recipe)
-            const toPost = document.getElementById(`recipes-container-${element.dataset.id}`)
-            toPost.innerHTML += `
-            ${r.name}
-            <br>
-            ${r.ingredients}
-            <br>
-            ${r.instructions}
-            `
+            r.renderToDom()
         })
     }
 
-    addRecipeToContainer() {
-        recipesContainer.append(this.showAllRecipes())
-        this.element.addEventListener('click', this.handleRecipeSubmit)
-    }
-
-    deleteRecipe(category, id){
-        fetch(`${this.endpoint}/categories/${category}/recipes/${id}`, {
+    deleteRecipe(id){
+        fetch(`${this.endpoint}/recipes/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,4 +49,5 @@ class RecipeService{
         .then(resp => resp.json())
         .then(json => alert(json.message))
     }
+
 }

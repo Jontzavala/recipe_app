@@ -11,19 +11,20 @@ class CategoryService{
             for (const category of categories){
                 const c = new Category(category)
                 c.slapOnDom()
+                c.optionToSelect()
             }
         })
     }
 
     createCategory(){
         const category = {
-            name: document.getElementById("name").value
+            name: document.getElementById('name').value
         }
-
         const configObj = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+
+                'Content-Type': 'application/json'            
             },
             body: JSON.stringify(category)
         }
@@ -33,25 +34,12 @@ class CategoryService{
         .then(category => {
             const c = new Category(category)
             c.slapOnDom()
-        })
-    }
-
-    showAllRecipes(){
-        const category = event.target.parentNode
-        const post = document.getElementById(`recipes-container-${category.dataset.id}`)
-        fetch(`${this.endpoint}/categories/${category.dataset.id}/recipes`)
-        .then(resp => resp.json())
-        .then(recipes => {
-
-            for (const recipe of recipes) {
-                const r = new Recipe(recipe)
-                r.appendRecipetoDom()
-            }
+            c.optionToSelect()
         })
     }
 
     deleteCategory(id){
-        fetch(`${this.endpoint}/categories/${id}`, {
+        fetch(`${this.endpoint}/categories/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,5 +48,4 @@ class CategoryService{
         .then(resp => resp.json())
         .then(json => alert(json.message))
     }
-
 }
