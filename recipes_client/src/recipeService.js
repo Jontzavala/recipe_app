@@ -31,7 +31,7 @@ class RecipeService{
             body: JSON.stringify(recipe)
         }
 
-        fetch(`${recipeService.endpoint}/recipes`, configObj)
+        fetch(`${this.endpoint}/recipes`, configObj)
         .then(resp => resp.json())
         .then(recipe => {
             const r = new Recipe(recipe)

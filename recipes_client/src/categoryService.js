@@ -38,6 +38,8 @@ class CategoryService{
         })
     }
 
+    
+
     deleteCategory(id){
         fetch(`${this.endpoint}/categories/${id}`,{
             method: 'DELETE',

@@ -36,7 +36,7 @@ class Recipe {
     }
 
     renderToDom(){
-        Recipe.recipesContainer.appendChild(this.recipeElement())
+        Recipe.recipesContainer.append(this.recipeElement())
     }
 
     deleteRecipe = () => {
