@@ -21,6 +21,7 @@ class Category{
         <p><strong>${this.name}</strong>
         <br>
         <button id='delete-bttn'>Remove Category</button>
+        <br>
         `
         return this.element
     }
